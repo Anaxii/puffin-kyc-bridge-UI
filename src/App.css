@@ -1,0 +1,169 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+}
+
+html {
+  @apply scroll-smooth;
+}
+body {
+  @apply m-0 p-0 font-normal font-poppins text-base text-primary-200;
+}
+a {
+  @apply hover:underline no-underline;
+}
+
+* {
+  font-family: Poppins;
+  font-weight: 400;
+}
+
+p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+.primary-btn {
+  width: 136px;
+  height: 44px;
+  left: 165px;
+  top: 2624px;
+  background: linear-gradient(0deg, #3341F5 -0.06%, #5E69FF 99.91%);
+  border: 0px solid #111111;
+  color: white;
+  border-radius: 30px;
+  transition: opacity 0.15s ease-in;
+}
+
+.primary-btn:hover {
+  opacity: 0.95;
+  transition: opacity 0.15s ease-in;
+  cursor: pointer;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: left;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.exposure-title {
+  color: white;
+  font-size: 2rem;
+}
+
+.color-primary {
+  color: white
+}
+
+.dapp {
+  text-align: left;
+  margin: 0 5%;
+  color: white;
+}
+
+.basket-list {
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  text-align: right;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.basket-list:hover {
+  background-color: #24272f;
+  cursor: pointer;
+}
+
+.basket-list p {
+  font-size: 1.35rem;
+  font-weight: 400;
+
+}
+
+.basket-list-header {
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  text-align: right;
+}
+
+.basket-list-header p {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+iframe {
+  z-index: -100 !important;
+}
+
+.collapsible .content {
+  background-color: #24272f;
+  padding: 0.5% 2%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.token-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-options-title {
+  text-align: center;
+  cursor: pointer;
+  background-color: #1d1f26;
+  height: 100%;
+  padding: 0 0.25rem;
+  padding-top: 0.75rem;
+  color: white;
+  transition: opacity 0.15s ease-in;
+}
+
+.modal-options-title:hover {
+  opacity: 0.75;
+  transition: opacity 0.15s ease-in;
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
