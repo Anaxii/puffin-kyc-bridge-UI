@@ -78,9 +78,9 @@ export default function BasketModal(props: any) {
                 {
                     selectedOption === "Redeem Shares"
                         ?
-                        <RedeemShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} />
+                        <RedeemShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} weights={props.weights}/>
                         :
-                        <CreateShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} />
+                        <CreateShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} weights={props.weights}/>
                 }
             </Modal>
         </div>

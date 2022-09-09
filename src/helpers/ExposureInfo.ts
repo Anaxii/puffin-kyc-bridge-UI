@@ -2,10 +2,10 @@ import {sleep} from "./util";
 import {ExposureToTrade} from "./types";
 import exp from "constants";
 
-const PairABI = require("../abi/pair.json")
-const ERC20ABI = require("../abi/erc20.json")
-const RouterABI = require("../abi/router.json");
-const ExposureABI = require("../abi/exposure.json")
+const PairABI = require("../constants/abi/pair.json")
+const ERC20ABI = require("../constants/abi/erc20.json")
+const RouterABI = require("../constants/abi/router.json");
+const ExposureABI = require("../constants/abi/exposure.json")
 
 const config: any = {
     "WAVAX": {

@@ -31,7 +31,7 @@ export default function CollapsibleBasketData(props: any) {
     const getBasketInfo = async () => {
         let _exposureInfo
 
-         _exposureInfo = new ExposureInfo(web3Context.provider, web3Context.web3, "0x452cfC754A3889aaBD43Ec575bE62467859434B7" )
+         _exposureInfo = web3Context.exposureInfo
         let _portions = await _exposureInfo.getPortions()
         setPortions(_portions)
         let bal = await _exposureInfo.getBalanceOfAddress(_exposureInfo.ExposureAddress, web3Context.account)
@@ -42,31 +42,15 @@ export default function CollapsibleBasketData(props: any) {
 
         let totalWeight = 0
         let _weights: any = {}
+
         Object.keys(_portions).map((asset: any) => {
             totalWeight += _portions[asset] * _prices.prices[asset]
         })
-        Object.keys(props.portions).map((asset: any) => {
+        Object.keys(_portions).map((asset: any) => {
             _weights[asset] = _portions[asset] * _prices.prices[asset] / totalWeight * 100
         })
-        console.log(_weights)
         setWeights(_weights)
     }
-
-    useEffect(() => {
-        if (!props.portions || !props.prices.prices)
-            return
-        let totalWeight = 0
-        let _weights: any = {}
-        console.log(props.prices.prices, props.portions)
-        Object.keys(props.portions).map((asset: any) => {
-            totalWeight += props.portions[asset] * props.prices.prices[asset]
-        })
-        Object.keys(props.portions).map((asset: any) => {
-            _weights[asset] = props.portions[asset] * props.prices.prices[asset] / totalWeight * 100
-        })
-        console.log(_weights)
-        setWeights(_weights)
-    }, [props.prices])
 
     useEffect(() => {
         let _weights: any = []
@@ -203,7 +187,7 @@ export default function CollapsibleBasketData(props: any) {
                         <p>
                             NAV Per Share: ${formatNumber(props.basket.navPerShare)}
                         </p>
-                        <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices}/>
+                        <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights}/>
                     </div>
                     <div style={{margin: "auto"}}>
                         <p>
@@ -212,7 +196,7 @@ export default function CollapsibleBasketData(props: any) {
                         <p>
                             NAV Per Share: ${formatNumber(props.basket.navPerShare)}
                         </p>
-                        <BasketModal title={"Redeem Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices}/>
+                        <BasketModal title={"Redeem Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights}/>
 
                     </div>
                     <div style={{width: "50%", marginLeft: "auto", marginRight: "auto", padding: "5%"}} data-tip=""
