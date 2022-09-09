@@ -7,6 +7,7 @@ import DApp from "./components/DApp";
 
 import {Web3Context} from "./helpers/context"
 import {ExposureInfo} from "./helpers/ExposureInfo";
+import LoadingModal from "./components/LoadingModal";
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -18,6 +19,7 @@ function App() {
   const [connecting, setConnecting] = useState(false)
   const [currentChainID, setCurrentChainID] = useState(1)
   const [loadingMessage, setLoadingMessage] = useState("Loading account")
+  const [showLoadingModal, setShowLoadingModal] = useState(false)
 
   useEffect(() => {
     if (provider) {
@@ -37,7 +39,9 @@ function App() {
         }
         setWeb3Data()
       });
-      provider.on("accountsChanged", (accounts:) => {
+      provider.on("accountsChanged", (accounts) => {
+        console.log("account changed")
+        setShowLoadingModal(true)
         setWeb3Data()
       });
     }
@@ -77,6 +81,7 @@ function App() {
     setWeb3(_web3)
     setExposureInfo(_exposureInfo)
     setBalances(_balances)
+    setShowLoadingModal(false)
   }
 
   const disconnect = () => {
@@ -106,6 +111,7 @@ function App() {
         <Web3Context.Provider value={{web3, provider, account, balances, exposureInfo}}>
           <Navigation account={account} disconnect={disconnect} />
           <DApp account={account} provider={provider} web3={web3}/>
+          {showLoadingModal && <LoadingModal/>}
         </Web3Context.Provider>
       </div>
       }
