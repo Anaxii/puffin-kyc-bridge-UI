@@ -41,7 +41,6 @@ export default function CreateShares(props: any) {
 
         })
         setMaxShares(max)
-        console.log('maxes', max)
     }
 
     const setMax = () => {
@@ -49,12 +48,7 @@ export default function CreateShares(props: any) {
     }
 
     useEffect(() => {
-        console.log(web3Context)
-    }, [props.weights])
-
-    useEffect(() => {
         getMax()
-        console.log(web3Context)
     }, [web3Context])
 
     return (

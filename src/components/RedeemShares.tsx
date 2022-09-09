@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {Web3Context} from "../helpers/context";
 import {formatNumber} from "../helpers/util";
 import TokenRequirements from "./TokenRequirements";
@@ -6,7 +6,6 @@ import TokenRequirements from "./TokenRequirements";
 export default function RedeemShares(props: any) {
     const web3Context = useContext(Web3Context);
     const [sharesToCreate, setSharesToCreate] = useState(0);
-    const [submitText, setSubmitText] = useState("Enter Amount");
     const [weights, setWeights] = useState<{[key: string]: number}>({});
 
     const handleSubmit = (event: any) => {
@@ -39,9 +38,6 @@ export default function RedeemShares(props: any) {
         setSharesToCreate(value || sharesToCreate)
     }
 
-    useEffect(() => {
-        console.log(web3Context)
-    }, [web3Context])
     return (
         <div style={{padding: "3rem", textAlign: 'center', color: '#d9d9d9'}}>
             <form onSubmit={handleSubmit}>
