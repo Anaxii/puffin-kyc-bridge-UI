@@ -1,11 +1,12 @@
 import useCollapse from 'react-collapsed';
 import {PieChart} from 'react-minimal-pie-chart';
-import {useEffect, useState, ComponentProps} from "react";
+import {useEffect, useState, ComponentProps, useContext} from "react";
 import ReactTooltip from 'react-tooltip';
 import {rainbow} from "../helpers/util";
 import {ExposureInfo} from "../helpers/ExposureInfo";
-import Web3 from "web3";
 import BasketModal from "./BasketModal";
+import {Web3Context} from "../helpers/context";
+import {formatNumber} from "../helpers/util";
 
 type Props = {
     data: ComponentProps<typeof PieChart>['data'];
@@ -16,34 +17,56 @@ function makeTooltipContent(entry: Props['data'][0]) {
 }
 
 export default function CollapsibleBasketData(props: any) {
+    const web3Context: any = useContext(Web3Context);
+
     const {getCollapseProps, getToggleProps, isExpanded} = useCollapse();
     const [weights, setWeights] = useState([])
     const [hovered, setHovered] = useState<number | null>(null);
 
     const [portions, setPortions] = useState({})
     const [balance, setBalance] = useState(0)
+    const [prices, setPrices] = useState({ })
 
-    const formatNumber = (num: number): string => {
-        return num.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2
-        })
-    }
 
     const getBasketInfo = async () => {
-        console.log(props)
         let _exposureInfo
-        let account: string
 
-         _exposureInfo = new ExposureInfo(props.provider, props.web3, "0x452cfC754A3889aaBD43Ec575bE62467859434B7" )
-        let _account = await props.web3.eth.getAccounts()
-        account = _account[0]
-
-        setPortions(await _exposureInfo.getPortions())
-        let bal = await _exposureInfo.getBalanceOfAddress(_exposureInfo.ExposureAddress, account)
+         _exposureInfo = new ExposureInfo(web3Context.provider, web3Context.web3, "0x452cfC754A3889aaBD43Ec575bE62467859434B7" )
+        let _portions = await _exposureInfo.getPortions()
+        setPortions(_portions)
+        let bal = await _exposureInfo.getBalanceOfAddress(_exposureInfo.ExposureAddress, web3Context.account)
         console.log(bal)
+        let _prices = await _exposureInfo.getPricesAndMcaps()
+        setPrices(_prices)
         setBalance(bal)
+
+        let totalWeight = 0
+        let _weights: any = {}
+        Object.keys(_portions).map((asset: any) => {
+            totalWeight += _portions[asset] * _prices.prices[asset]
+        })
+        Object.keys(props.portions).map((asset: any) => {
+            _weights[asset] = _portions[asset] * _prices.prices[asset] / totalWeight * 100
+        })
+        console.log(_weights)
+        setWeights(_weights)
     }
+
+    useEffect(() => {
+        if (!props.portions || !props.prices.prices)
+            return
+        let totalWeight = 0
+        let _weights: any = {}
+        console.log(props.prices.prices, props.portions)
+        Object.keys(props.portions).map((asset: any) => {
+            totalWeight += props.portions[asset] * props.prices.prices[asset]
+        })
+        Object.keys(props.portions).map((asset: any) => {
+            _weights[asset] = props.portions[asset] * props.prices.prices[asset] / totalWeight * 100
+        })
+        console.log(_weights)
+        setWeights(_weights)
+    }, [props.prices])
 
     useEffect(() => {
         let _weights: any = []
@@ -60,10 +83,6 @@ export default function CollapsibleBasketData(props: any) {
         console.log(getToggleProps())
     }, [])
 
-    useEffect(() => {
-
-        console.log(getToggleProps())
-    }, [getToggleProps])
     return (
         <div className="collapsible">
             <div className={"basket-list"} {...getToggleProps()} style={{backgroundColor: getToggleProps()["aria-expanded"] ? "#24272f" : ''}} id={props.basket.name}>
@@ -129,7 +148,7 @@ export default function CollapsibleBasketData(props: any) {
                             Tokens sold
                         </p>
                         <p>
-                            TOkens to buy
+                            Tokens to buy
                         </p>
                         <p>
                             Tokens bought
@@ -184,7 +203,7 @@ export default function CollapsibleBasketData(props: any) {
                         <p>
                             NAV Per Share: ${formatNumber(props.basket.navPerShare)}
                         </p>
-                        <BasketModal title={"Create Shares"}/>
+                        <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices}/>
                     </div>
                     <div style={{margin: "auto"}}>
                         <p>
@@ -193,7 +212,7 @@ export default function CollapsibleBasketData(props: any) {
                         <p>
                             NAV Per Share: ${formatNumber(props.basket.navPerShare)}
                         </p>
-                        <BasketModal title={"Redeem Shares"}/>
+                        <BasketModal title={"Redeem Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices}/>
 
                     </div>
                     <div style={{width: "50%", marginLeft: "auto", marginRight: "auto", padding: "5%"}} data-tip=""

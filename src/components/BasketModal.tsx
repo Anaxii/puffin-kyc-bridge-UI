@@ -1,6 +1,8 @@
 // @ts-ignore
 import Modal from 'react-modal';
 import {useState} from "react";
+import RedeemShares from "./RedeemShares";
+import CreateShares from "./CreateShares";
 
 const customStyles = {
     overlay: {
@@ -8,13 +10,13 @@ const customStyles = {
 
     },
     content: {
-        top: '50%',
+        top: '40%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
         width: '20%',
-        height: "30%",
+        minHeight: "30%",
         padding: 0,
         borderColor: "transparent",
         transform: 'translate(-50%, -50%)',
@@ -53,18 +55,33 @@ export default function BasketModal(props: any) {
                 contentLabel="Basket Modal"
             >
                 <div className={"modal-options"}>
-                    <div onClick={() => {changeOption("Create Shares")}} className={"modal-options-title"}>
+                    <div onClick={() => {
+                        changeOption("Create Shares")
+                    }}
+                         style={{
+                             backgroundColor: selectedOption !== "Redeem Shares" ? '#282C34' : '',
+                             borderTop: selectedOption !== "Redeem Shares" ? '2px solid white' : ''
+                         }} className={"modal-options-title"}>
                         Create Shares
                     </div>
-                    <div onClick={() => {changeOption("Redeem Shares")}} className={"modal-options-title"}>
+                    <div onClick={() => {
+                        changeOption("Redeem Shares")
+                    }}
+                         style={{
+                             backgroundColor: selectedOption !== "Create Shares" ? '#282C34' : '',
+                             borderTop: selectedOption !== "Create Shares" ? '2px solid white' : ''
+                         }}
+                         className={"modal-options-title"}>
                         Redeem Shares
                     </div>
                 </div>
-                <div style={{padding: "2rem"}}>
-                    <h2>{selectedOption}</h2>
-                    <button onClick={closeModal}>close</button>
-                    <button onClick={() => {changeOption("Redeem Shares")}}>Redeem Shares</button>
-                </div>
+                {
+                    selectedOption === "Redeem Shares"
+                        ?
+                        <RedeemShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} />
+                        :
+                        <CreateShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} />
+                }
             </Modal>
         </div>
     );

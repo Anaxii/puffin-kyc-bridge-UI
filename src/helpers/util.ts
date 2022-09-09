@@ -1,5 +1,11 @@
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 export const convertBigIntToNumber = (num: bigint) => Number(num  / BigInt(10**10)) / (10**8)
+export const formatNumber = (num: number): string => {
+    return num.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+    })
+}
 
 export function rainbow(numOfSteps: number, step: number) {
     var r, g, b;

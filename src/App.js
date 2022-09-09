@@ -1,11 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext} from 'react';
 import ConnectWeb3 from "./components/ConnectWeb3.tsx";
 import Web3 from "web3";
 import Navigation from "./components/Navigation";
 import DApp from "./components/DApp";
-import {ExposureInfo} from "./helpers/ExposureInfo";
+
+import {Web3Context} from "./helpers/context"
+
 function App() {
   const [provider, setProvider] = useState(null)
   const [account, setAccount] = useState("")
@@ -29,12 +30,12 @@ function App() {
     if (provider && !ready) {
       setReady(true)
     }
-  }, [web3])
+  }, [account])
 
   const setWeb3Data = async () => {
     let _web3 = await new Web3(provider);
-    let account = await _web3.eth.getAccounts();
-    setAccount(account[0])
+    let _account = await _web3.eth.getAccounts();
+    setAccount(_account[0])
     setWeb3(_web3)
   }
 
@@ -57,8 +58,10 @@ function App() {
       </header>
         :
       <div>
-        <Navigation account={account} disconnect={disconnect}/>
-        <DApp account={account} provider={provider} web3={web3}/>
+        <Web3Context.Provider value={{web3, provider, account}}>
+          <Navigation account={account} disconnect={disconnect}/>
+          <DApp account={account} provider={provider} web3={web3}/>
+        </Web3Context.Provider>
       </div>
       }
 

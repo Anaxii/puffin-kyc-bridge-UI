@@ -37,7 +37,7 @@ h2 {
   height: 44px;
   left: 165px;
   top: 2624px;
-  background: linear-gradient(0deg, #3341F5 -0.06%, #5E69FF 99.91%);
+  background: linear-gradient(0deg, #3341F5 -0.06%, #414dfa 99.91%);
   border: 0px solid #111111;
   color: white;
   border-radius: 30px;
@@ -129,6 +129,14 @@ iframe {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.collapsible .content-token {
+  padding: 0.5% 2%;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
 .token-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -137,6 +145,35 @@ iframe {
 .modal-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-options-small {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.modal-options-small p {
+  font-size: 14px !important;
+}
+
+.exposure-input {
+  background-color: transparent;
+  border: none !important;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  width: 90%;
+  outline: none;
+}
+
+.token-requirement-list {
+  padding: 0.5rem;
+  display: grid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+.token-requirement-list:hover {
+  cursor: pointer;
 }
 
 .modal-options-title {

@@ -163,7 +163,7 @@ export default function DApp(props: any) {
         <div>
             {baskets.map((basket, index) => {
                 return (
-                    <CollapsibleBasketData basket={basket} provider={props.provider} web3={props.web3}/>
+                    <CollapsibleBasketData basket={basket} key={basket.name}/>
 
                 )
             })}
