@@ -37,6 +37,9 @@ function App() {
         }
         setWeb3Data()
       });
+      provider.on("accountsChanged", (accounts:) => {
+        setWeb3Data()
+      });
     }
   }, [provider])
 

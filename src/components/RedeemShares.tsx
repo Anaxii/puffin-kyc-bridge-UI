@@ -13,6 +13,10 @@ export default function RedeemShares(props: any) {
 
     }
 
+    const setMax = () => {
+        setSharesToCreate(props.balance)
+    }
+
     const handleChange = (event: any) => {
         console.log(props)
         if (event.target.value == ".")
@@ -45,6 +49,8 @@ export default function RedeemShares(props: any) {
                     <input className={"exposure-input"} type="text" value={sharesToCreate} onChange={handleChange} />
                 </label>
             </form>
+            <button onClick={setMax} className={"max-btn"} >Max</button>
+
             <div className={"modal-options-small"} style={{paddingTop: "1.5rem"}}>
                 <p style={{textAlign: "left"}}>
                     Balance Before

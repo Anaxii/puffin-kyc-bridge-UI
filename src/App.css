@@ -133,6 +133,18 @@ iframe {
   padding: 0.5% 2%;
 }
 
+.max-btn {
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 25px;
+}
+
+.max-btn:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 .hover-underline:hover {
   text-decoration: underline;
 }

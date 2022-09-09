@@ -62,10 +62,10 @@ export default function CollapsibleBasketData(props: any) {
                 tooltip: token.token
             })
         })
+        console.log(props)
         setWeights(_weights)
         getBasketInfo()
-        console.log(getToggleProps())
-    }, [])
+    }, [web3Context.web3])
 
     return (
         <div className="collapsible">

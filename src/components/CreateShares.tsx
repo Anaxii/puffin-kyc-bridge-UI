@@ -44,6 +44,10 @@ export default function CreateShares(props: any) {
         console.log('maxes', max)
     }
 
+    const setMax = () => {
+        setSharesToCreate(Math.round(maxShares * 100000) / 100000)
+    }
+
     useEffect(() => {
         console.log(web3Context)
     }, [props.weights])
@@ -59,7 +63,10 @@ export default function CreateShares(props: any) {
                 <label>
                         <input className={"exposure-input"} type="text" value={sharesToCreate} onChange={handleChange} />
                 </label>
+
             </form>
+            <button onClick={setMax} className={"max-btn"} >Max</button>
+
             <div className={"modal-options-small"} style={{paddingTop: "1.5rem"}}>
                 <p style={{textAlign: "left"}}>
                     Balance Before
