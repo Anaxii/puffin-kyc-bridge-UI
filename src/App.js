@@ -99,22 +99,24 @@ function App() {
 
   return (
     <div className="App">
-      {!ready ?
-        <header className="App-header">
-        <h3>
-          Exposure Market Baskets
-        </h3>
-        <ConnectWeb3 setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting} connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID}/>
-      </header>
-        :
-      <div>
-        <Web3Context.Provider value={{web3, provider, account, balances, exposureInfo}}>
-          <Navigation account={account} disconnect={disconnect} />
-          <DApp account={account} provider={provider} web3={web3}/>
-          {showLoadingModal && <LoadingModal/>}
-        </Web3Context.Provider>
+      <div style={{maxWidth: "1800px", marginLeft: "auto", marginRight: "auto"}}>
+        {!ready ?
+          <header className="App-header">
+            <h3>
+              Exposure Market Baskets
+            </h3>
+            <ConnectWeb3 setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting} connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID}/>
+          </header>
+          :
+          <div>
+            <Web3Context.Provider value={{web3, provider, account, balances, exposureInfo}}>
+              <Navigation account={account} disconnect={disconnect} />
+              <DApp account={account} provider={provider} web3={web3}/>
+              {showLoadingModal && <LoadingModal/>}
+            </Web3Context.Provider>
+          </div>
+        }
       </div>
-      }
 
     </div>
   );
