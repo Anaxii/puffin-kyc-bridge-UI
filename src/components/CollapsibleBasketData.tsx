@@ -3,7 +3,6 @@ import {PieChart} from 'react-minimal-pie-chart';
 import {useEffect, useState, ComponentProps, useContext} from "react";
 import ReactTooltip from 'react-tooltip';
 import {rainbow} from "../helpers/util";
-import {ExposureInfo} from "../helpers/ExposureInfo";
 import BasketModal from "./BasketModal";
 import {Web3Context} from "../helpers/context";
 import {formatNumber} from "../helpers/util";
@@ -25,6 +24,8 @@ export default function CollapsibleBasketData(props: any) {
 
     const [portions, setPortions] = useState({})
     const [balance, setBalance] = useState(0)
+    const [basketCap, setBasketCap] = useState(props.basket.basketCap)
+
     const [prices, setPrices] = useState({ })
 
 
@@ -34,11 +35,11 @@ export default function CollapsibleBasketData(props: any) {
          _exposureInfo = web3Context.exposureInfo
         let _portions = await _exposureInfo.getPortions()
         setPortions(_portions)
-        let bal = await _exposureInfo.getBalanceOfAddress(_exposureInfo.ExposureAddress, web3Context.account)
-        console.log(bal)
         let _prices = await _exposureInfo.getPricesAndMcaps()
+        let cap = await _exposureInfo.getBasketCap(props.basket.basketContractAddress)
+        console.log(cap)
+        setBasketCap(cap)
         setPrices(_prices)
-        setBalance(bal)
 
         let totalWeight = 0
         let _weights: any = {}
@@ -51,6 +52,12 @@ export default function CollapsibleBasketData(props: any) {
         })
         setWeights(_weights)
     }
+
+    useEffect(() => {
+        console.log("refreshing", props.basket.name)
+        setBalance(web3Context.balances[props.basket.name])
+        getBasketInfo()
+    }, [web3Context.balances])
 
     useEffect(() => {
         let _weights: any = []
@@ -83,11 +90,9 @@ export default function CollapsibleBasketData(props: any) {
                     ${formatNumber(props.basket.nav)}
                 </p>
                 <p>
-                    {formatNumber(props.basket.supply)}/{props.basket.basketCap}
+                    {formatNumber(props.basket.supply)}/{formatNumber(basketCap)}
                 </p>
-                <p>
-                    {props.basket.holders}
-                </p>
+
                 <p>
                     ${formatNumber(props.basket.marketPrice)}
                 </p>
@@ -187,7 +192,7 @@ export default function CollapsibleBasketData(props: any) {
                         <p>
                             NAV Per Share: ${formatNumber(props.basket.navPerShare)}
                         </p>
-                        <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights}/>
+                        <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights} basketCap={basketCap}/>
                     </div>
                     <div style={{margin: "auto"}}>
                         <p>

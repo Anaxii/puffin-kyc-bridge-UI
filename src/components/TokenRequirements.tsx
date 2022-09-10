@@ -24,7 +24,11 @@ export default function TokenRequirements(props: any) {
                             Asset Name
                         </p>
                         <p style={{textAlign: "right", fontSize: "12px", color: "#ababab"}}>
-                            Requirement
+                            {props.title == "Token Allowances" ?
+                                <div>Allowance</div>
+                                :
+                                <div>Amount</div>
+                            }
                         </p>
                     </div>
                     {Object.keys(props.portions).map((asset: string) => {
@@ -41,7 +45,15 @@ export default function TokenRequirements(props: any) {
                                     </p>
                                 }
                                 <p style={{textAlign: "right"}}>
-                                    {(props.portions[asset] * props.amount).toLocaleString(undefined, {maximumFractionDigits: 6, minimumFractionDigits: 6})}
+                                    {props.title == "Token Allowances" ?
+                                        <div>
+                                            {(Number(BigInt(props.portions[asset]) / BigInt(10**12)) / (10**6)).toLocaleString(undefined, {maximumFractionDigits: 8, minimumFractionDigits: 6})}
+                                        </div>
+                                        :
+                                        <div>
+                                            {(props.portions[asset] * props.amount).toLocaleString(undefined, {maximumFractionDigits: 8, minimumFractionDigits: 6})}
+                                        </div>
+                                    }
                                 </p>
                             </div>
                         )

@@ -422,6 +422,14 @@ export class ExposureInfo {
         })
     }
 
+    async getBasketCap(tokenAddress: string): Promise<number> {
+        return new Promise(async resolve => {
+            let token = new this.Web3.eth.Contract(ExposureABI, tokenAddress)
+            let basketCap = await token.methods.basketCap().call()
+            resolve(Number(BigInt(basketCap) / BigInt(10 ** 10)) / (10 ** 8))
+        })
+    }
+
     async getBalanceOfAddress(tokenAddress: string, publicKey: string): Promise<number> {
         return new Promise(async resolve => {
             let token = new this.Web3.eth.Contract(ERC20ABI, tokenAddress)

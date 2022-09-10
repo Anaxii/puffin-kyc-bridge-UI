@@ -27,7 +27,7 @@ export default function RedeemShares(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
-                await contract.methods.approve(props.basket.basketContractAddress, (BigInt(sharesToCreate) * BigInt(10**18))).send({from: web3Context.account}).catch((err: any) => {
+                await contract.methods.approve(props.basket.basketContractAddress, (BigInt(Math.round(sharesToCreate * (10**4))) * BigInt(10**14))).send({from: web3Context.account}).catch((err: any) => {
                     reject()
                     return
                 })
@@ -72,16 +72,15 @@ export default function RedeemShares(props: any) {
             }
         ).then(() => {
             setRedeemMessage("Redeem")
+            web3Context.refreshData()
             getAllowance()
         })
     }
 
     const getAllowance = async () => {
-        console.log(props, web3Context)
         let contract = new web3Context.web3.eth.Contract(IERC20ABI, props.basket.basketContractAddress)
         let _allowance = await contract.methods.allowance(web3Context.account, props.basket.basketContractAddress).call()
         setAllowance(BigInt(_allowance))
-        console.log(_allowance)
     }
 
     useEffect(() => {
@@ -89,7 +88,7 @@ export default function RedeemShares(props: any) {
     }, [])
 
     const setMax = () => {
-        if ((BigInt(props.balance) * BigInt(10**18)) > allowance) {
+        if ((BigInt(Math.round(props.balance * (10**8))) * BigInt(10**10)) > allowance) {
             setRedeemMessage("Approve")
         } else {
             setRedeemMessage("Redeem")
@@ -98,7 +97,6 @@ export default function RedeemShares(props: any) {
     }
 
     const handleChange = (event: any) => {
-        console.log(props)
         if (event.target.value == ".")
             event.target.value = "0."
 
@@ -151,7 +149,7 @@ export default function RedeemShares(props: any) {
                 </p>
             </div>
             <div style={{paddingTop: "1rem"}}>
-                <TokenRequirements portions={props.portions} amount={sharesToCreate} prices={props.prices} weights={weights} title={"Tokens Received"}/>
+                <TokenRequirements portions={props.portions} amount={sharesToCreate} prices={props.prices} weights={weights} title={"Tokens You Receive"}/>
             </div>
             <div style={{paddingTop: "1.5rem"}}>
                 {sharesToCreate > 0 ?
