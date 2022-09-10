@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, createContext} from 'react';
+import { useState, useEffect} from 'react';
 import ConnectWeb3 from "./components/ConnectWeb3.tsx";
 import Web3 from "web3";
 import Navigation from "./components/Navigation";
@@ -8,6 +8,7 @@ import DApp from "./components/DApp";
 import {Web3Context} from "./helpers/context"
 import {ExposureInfo} from "./helpers/ExposureInfo";
 import LoadingModal from "./components/LoadingModal";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -34,7 +35,7 @@ function App() {
       provider.on("chainChanged", async (chainId) => {
         setCurrentChainID(parseInt(chainId))
         console.log(parseInt(chainId))
-        if (parseInt(chainId) != 43114) {
+        if (parseInt(chainId) != 43114 && chainId != 43113) {
           await resetData()
         }
         setWeb3Data()
@@ -62,13 +63,13 @@ function App() {
     let _web3 = await new Web3(provider);
     console.log("id", await _web3.eth.getChainId())
     let chainID = await _web3.eth.getChainId()
-    if (chainID != 43114) {
+    if (chainID != 43114 && chainID != 43113) {
       setLoadingMessage("Change your network to Avalanche to continue")
       return
     }
     setLoadingMessage("Loading account")
     let _account = await _web3.eth.getAccounts();
-    let _exposureInfo = new ExposureInfo(provider, _web3, "0x452cfC754A3889aaBD43Ec575bE62467859434B7" )
+    let _exposureInfo = new ExposureInfo(provider, _web3, "0x98d3CBEb3D6bC861e04c7d6238eD8107cE7F1703" )
     let _portions = await _exposureInfo.getPortions()
 
     let _balances = {}
@@ -110,6 +111,17 @@ function App() {
           :
           <div>
             <Web3Context.Provider value={{web3, provider, account, balances, exposureInfo}}>
+              <ToastContainer
+                position="top-center"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
               <Navigation account={account} disconnect={disconnect} />
               <DApp account={account} provider={provider} web3={web3}/>
               {showLoadingModal && <LoadingModal/>}
