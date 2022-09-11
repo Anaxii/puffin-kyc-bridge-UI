@@ -86,10 +86,11 @@ export default function CreateShares(props: any) {
         let _toApprove = []
         for (const i in allowances) {
             console.log(props.portions[i] * value)
+            let _amount = (BigInt(Math.round(value * (10**8))) * BigInt(10**10)) * (BigInt(Math.round(props.portions[i] * (10 ** 8)) ) * ( BigInt(10**10))) / BigInt(10**18)
             // @ts-ignore
-            if (BigInt(value * (10**20)) * BigInt(Math.round(props.portions[i] * (10 ** 20)) ) / BigInt(10**20) > allowances[i]) {
+            if (_amount > allowances[i]) {
                 _toApprove.push({
-                    token: i, amount: BigInt(value) * BigInt(Math.round(props.portions[i] * (10 ** 18))), address: _tokenAddress[i]
+                    token: i, amount: _amount, address: _tokenAddress[i]
                 })
             }
         }
@@ -118,7 +119,7 @@ export default function CreateShares(props: any) {
 
         getToApprove(value)
         // @ts-ignore
-        setSharesToCreate(value || sharesToCreate)
+        setSharesToCreate(value || 0)
     }
 
     const getAllowance = async () => {
@@ -145,6 +146,8 @@ export default function CreateShares(props: any) {
 
     const setMax = () => {
         setSharesToCreate(Math.round(maxShares * 100000) / 100000)
+        getToApprove(Math.round(maxShares * 100000) / 100000)
+
     }
 
     useEffect(() => {

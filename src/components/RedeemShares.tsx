@@ -15,7 +15,7 @@ export default function RedeemShares(props: any) {
     const [redeemMessage, setRedeemMessage] = useState("Redeem");
 
     const handleSubmit = (event: any) => {
-        if ((BigInt(sharesToCreate) * BigInt(10**18)) > allowance) {
+        if ((BigInt(Math.round(sharesToCreate * (10**8))) * BigInt(10**10)) > allowance) {
             approve()
         } else {
             create()
@@ -27,7 +27,7 @@ export default function RedeemShares(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
-                await contract.methods.approve(props.basket.basketContractAddress, (BigInt(Math.round(sharesToCreate * (10**4))) * BigInt(10**14))).send({from: web3Context.account}).catch((err: any) => {
+                await contract.methods.approve(props.basket.basketContractAddress, (BigInt(Math.round(sharesToCreate * (10**8))) * BigInt(10**10))).send({from: web3Context.account}).catch((err: any) => {
                     reject()
                     return
                 })
@@ -54,7 +54,7 @@ export default function RedeemShares(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
-                await contract.methods.burn((BigInt(sharesToCreate) * BigInt(10**18)), web3Context.account).send({from: web3Context.account}).catch((err: any) => {
+                await contract.methods.burn((BigInt(Math.round(sharesToCreate * (10**8))) * BigInt(10**10)), web3Context.account).send({from: web3Context.account}).catch((err: any) => {
                     reject()
                     return
                 })
@@ -106,6 +106,11 @@ export default function RedeemShares(props: any) {
             return
         }
 
+        if (event.target.value[event.target.value.length - 1] == ".") {
+            setSharesToCreate(event.target.value)
+            return
+        }
+
         let value: number = Number(event.target.value)
         if (value < 0)
             value = 0
@@ -113,14 +118,14 @@ export default function RedeemShares(props: any) {
         if (value > props.balance)
             value = props.balance
 
-        if ((BigInt(value) * BigInt(10**18)) > allowance) {
+        if ((BigInt(Math.round(value * (10**8))) * BigInt(10**10)) > allowance) {
             setRedeemMessage("Approve")
         } else {
             setRedeemMessage("Redeem")
         }
 
         // @ts-ignore
-        setSharesToCreate(value || sharesToCreate)
+        setSharesToCreate(value || 0)
     }
 
     return (
