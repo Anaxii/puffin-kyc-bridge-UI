@@ -67,6 +67,7 @@ export const chainIds: {[key: number]: string} = {
   42220: "celo",
   42262: "oasis",
   43114: "avalanche",
+  43113: "avalanche fuji",
   47805: "rei",
   55555: "reichain",
   420666: "kekchain",

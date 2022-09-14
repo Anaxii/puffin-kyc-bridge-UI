@@ -23,6 +23,10 @@ export default function CollapsibleBasketData(props: any) {
     const [hovered, setHovered] = useState<number | null>(null);
 
     const [portions, setPortions] = useState({})
+    const [stats, setStats] = useState({
+        rebalanceTime: 0
+    })
+
     const [balance, setBalance] = useState(0)
     const [basketCap, setBasketCap] = useState(props.basket.basketCap)
 
@@ -35,10 +39,10 @@ export default function CollapsibleBasketData(props: any) {
          _exposureInfo = web3Context.exposureInfo
         let _portions = await _exposureInfo.getPortions()
         setPortions(_portions)
+        let _stats = await _exposureInfo.getBasketStats(props.basket)
+        setStats(_stats)
         let _prices = await _exposureInfo.getPricesAndMcaps()
-        let cap = await _exposureInfo.getBasketCap(props.basket.basketContractAddress)
-        console.log(cap)
-        setBasketCap(cap)
+        setBasketCap(Number(BigInt(_stats.basketCap) / BigInt(10**10)) / (10**8))
         setPrices(_prices)
 
         let totalWeight = 0
@@ -103,81 +107,46 @@ export default function CollapsibleBasketData(props: any) {
             <div {...getCollapseProps()}>
                 <div className="content">
                     <div style={{margin: "auto"}}>
-                        <p>
-                        User Fee Tier: Default
-                    </p>
-                        <p>
-                        User Average Entry
-                    </p>
-                        <p>
-                            Mint Fee: 0.3%
-                        </p>
-                        <p>
-                            APY: 0%
-                        </p>
-                        <p>
-                            Next Rebalance Time
-                        </p>
-                        <p>
-                            Next Rebalance Step
-                        </p>
-                        <p>
-                            Sell to exposure
-                        </p>
-                        <p>
-                            buy from exposure
-                        </p>
-                        <p>
-                            Rebalance token mcap
-                        </p>
-                        <p>
-                            Tokens to sell
-                        </p>
-                        <p>
-                            Tokens sold
-                        </p>
-                        <p>
-                            Tokens to buy
-                        </p>
-                        <p>
-                            Tokens bought
-                        </p>
-                        <p>
-                            USDC in asset manager
-                        </p>
-                        <p>
-                            Holders chart
-                        </p>
-                        <p>
-                            NAV chart
-                        </p>
-                        <p>
-                            rebalance token price
-                        </p>
-                        <p>
-                            Is rebalancing: false
-                        </p>
-                        <p>
-                            Basket Cap
-                        </p>
-                        <p>
-                            Mint Fee: 0.3%
-                        </p>
-                        <p>
-                            Burn Fee: 0.3%
-                        </p>
-                        <p>
-                            Quick Buy Fee: 0.3%
-                        </p>
-                        <p>
-                            Quick Liquidate Fee: 0.3%
-                        </p>
-                        <p>
-                            Liquidity: ${formatNumber(0)}
-                        </p>
-                        <p>
-                            Mark Price: ${formatNumber(props.basket.marketPrice)}
-                        </p>
+                        <div className={"modal-options"} style={{width: "100%", paddingBottom: "1rem"}}>
+                            <p style={{textAlign: "left"}}>
+                                User Fee Tier:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                Default
+                            </p>
+                            <p style={{textAlign: "left"}}>
+                                Mint Fee:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                {props.basket.mintFee}%
+                            </p>
+                            <p style={{textAlign: "left"}}>
+                                Burn Fee:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                {props.basket.redeemFee}%
+                            </p>
+                            <p style={{textAlign: "left"}}>
+                                Next Rebalance:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                {stats.rebalanceTime}
+                            </p>
+                            <p style={{textAlign: "left"}}>
+                                Holders:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                ${formatNumber(props.basket.marketPrice)}
+                            </p>
+                            <p style={{textAlign: "left"}}>
+                                Liquidity:
+                            </p>
+                            <p style={{textAlign: "right"}}>
+                                ${formatNumber(props.basket.liquidity)}
+                            </p>
+                        </div>
+                    </div>
+                    <div style={{margin: "auto"}}>
                         <a href={props.basket.dexAddress} target={"_blank"}>
                             <button className={"primary-btn"}>
                                 Trade
@@ -186,49 +155,36 @@ export default function CollapsibleBasketData(props: any) {
 
                     </div>
                     <div style={{margin: "auto"}}>
-                        <p>
-                            Index Price: ${formatNumber(props.basket.indexPrice)}
-                        </p>
-                        <p>
-                            NAV Per Share: ${formatNumber(props.basket.navPerShare)}
-                        </p>
                         <BasketModal title={"Create Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights} basketCap={basketCap}/>
                     </div>
                     <div style={{margin: "auto"}}>
-                        <p>
-                            {formatNumber(props.basket.nav)}
-                        </p>
-                        <p>
-                            NAV Per Share: ${formatNumber(props.basket.navPerShare)}
-                        </p>
                         <BasketModal title={"Redeem Shares"} basket={props.basket} portions={portions} balance={balance} prices={prices} weights={weights}/>
-
                     </div>
-                    <div style={{width: "50%", marginLeft: "auto", marginRight: "auto", padding: "5%"}} data-tip=""
-                         data-for="chart">
-                        <p style={{textAlign: "center"}}>
-                            Asset Weights
-                        </p>
-                        <PieChart
-                            data={weights}
-                            labelStyle={{
-                                fill: 'black',
-                                fontSize: '5px'
-                            }}
-                            onMouseOver={(_, index) => {
-                                setHovered(index);
-                            }}
-                            onMouseOut={() => {
-                                setHovered(null);
-                            }}
-                        />
-                        <ReactTooltip
-                            id="chart"
-                            getContent={() =>
-                                typeof hovered === 'number' ? makeTooltipContent(weights[hovered]) : null
-                            }
-                        />
-                    </div>
+                    {/*<div style={{width: "50%", marginLeft: "auto", marginRight: "auto", padding: "5%"}} data-tip=""*/}
+                    {/*     data-for="chart">*/}
+                    {/*    <p style={{textAlign: "center"}}>*/}
+                    {/*        Asset Weights*/}
+                    {/*    </p>*/}
+                    {/*    <PieChart*/}
+                    {/*        data={weights}*/}
+                    {/*        labelStyle={{*/}
+                    {/*            fill: 'black',*/}
+                    {/*            fontSize: '5px'*/}
+                    {/*        }}*/}
+                    {/*        onMouseOver={(_, index) => {*/}
+                    {/*            setHovered(index);*/}
+                    {/*        }}*/}
+                    {/*        onMouseOut={() => {*/}
+                    {/*            setHovered(null);*/}
+                    {/*        }}*/}
+                    {/*    />*/}
+                    {/*    <ReactTooltip*/}
+                    {/*        id="chart"*/}
+                    {/*        getContent={() =>*/}
+                    {/*            typeof hovered === 'number' ? makeTooltipContent(weights[hovered]) : null*/}
+                    {/*        }*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

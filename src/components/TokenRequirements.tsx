@@ -1,14 +1,7 @@
 import useCollapse from 'react-collapsed';
-import {ComponentProps, useContext, useEffect, useState} from "react";
-import {Web3Context} from "../helpers/context";
-import {formatNumber} from "../helpers/util";
 
 export default function TokenRequirements(props: any) {
-    const web3Context: any = useContext(Web3Context);
-
-    const {getCollapseProps, getToggleProps, isExpanded} = useCollapse();
-
-
+    const {getCollapseProps, getToggleProps} = useCollapse();
 
     return (
         <div className="collapsible">
@@ -47,18 +40,23 @@ export default function TokenRequirements(props: any) {
                                 <p style={{textAlign: "right"}}>
                                     {props.title == "Token Allowances" ?
                                         <div>
-                                            {(Number(BigInt(props.portions[asset]) / BigInt(10**12)) / (10**6)).toLocaleString(undefined, {maximumFractionDigits: 8, minimumFractionDigits: 6})}
+                                            {(Number(BigInt(props.portions[asset]) / BigInt(10 ** 12)) / (10 ** 6)).toLocaleString(undefined, {
+                                                maximumFractionDigits: 8,
+                                                minimumFractionDigits: 6
+                                            })}
                                         </div>
                                         :
                                         <div>
-                                            {(props.portions[asset] * props.amount).toLocaleString(undefined, {maximumFractionDigits: 8, minimumFractionDigits: 6})}
+                                            {(props.portions[asset] * props.amount).toLocaleString(undefined, {
+                                                maximumFractionDigits: 8,
+                                                minimumFractionDigits: 6
+                                            })}
                                         </div>
                                     }
                                 </p>
                             </div>
                         )
                     })}
-
                 </div>
             </div>
         </div>

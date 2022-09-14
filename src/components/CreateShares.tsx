@@ -85,7 +85,6 @@ export default function CreateShares(props: any) {
 
         let _toApprove = []
         for (const i in allowances) {
-            console.log(props.portions[i] * value)
             let _amount = (BigInt(Math.round(value * (10**8))) * BigInt(10**10)) * (BigInt(Math.round(props.portions[i] * (10 ** 8)) ) * ( BigInt(10**10))) / BigInt(10**18)
             // @ts-ignore
             if (_amount > allowances[i]) {
@@ -94,7 +93,6 @@ export default function CreateShares(props: any) {
                 })
             }
         }
-        console.log(_toApprove)
         // @ts-ignore
         setToApprove(_toApprove)
     }
