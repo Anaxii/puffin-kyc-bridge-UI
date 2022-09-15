@@ -39,8 +39,6 @@ function App() {
     _tokens = _tokens.length > 0 ? _tokens : tokens_layout
     setTokens(_tokens)
 
-    console.log("test", _baskets, _tokens)
-
     if (_baskets)
       localStorage.setItem("baskets", JSON.stringify(_baskets))
     if (_tokens)
