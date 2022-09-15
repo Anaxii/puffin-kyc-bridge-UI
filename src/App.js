@@ -11,7 +11,8 @@ import LoadingModal from "./components/LoadingModal";
 import {ToastContainer} from 'react-toastify';
 import {Tokens} from "./constants/tokens";
 import {sleep} from "./helpers/util";
-import {baskets} from "./constants/baskets";
+import {getBaskets} from "./helpers/api";
+import {baskets_layout} from "./constants/baskets";
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -24,10 +25,14 @@ function App() {
   const [currentChainID, setCurrentChainID] = useState(1)
   const [loadingMessage, setLoadingMessage] = useState("Loading account")
   const [showLoadingModal, setShowLoadingModal] = useState(false)
+  const [baskets, setBaskets] = useState({})
 
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const refreshData = async () => {
+
+    let _baskets = await getBaskets()
+    setBaskets(_baskets || baskets_layout)
 
     let _account = account
     while (!_account) {
