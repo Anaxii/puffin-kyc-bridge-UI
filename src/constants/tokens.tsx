@@ -1,4 +1,12 @@
-export let Tokens = [
+export let tokens_layout = [
+    {
+        "name": "XPSR Alpha 10/WAVAX",
+        "token": "XPSR Alpha 100",
+        "quote": "WAVAX",
+        "pairAddress": "",
+        "tokenAddress": "0x98d3CBEb3D6bC861e04c7d6238eD8107cE7F1703",
+        "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
+    },
     {
         "name": "XPSR Alpha 10/WAVAX",
         "token": "XPSR Alpha 10",

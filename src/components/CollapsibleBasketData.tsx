@@ -59,6 +59,7 @@ export default function CollapsibleBasketData(props: any) {
 
     useEffect(() => {
         console.log("refreshing", props.basket.name)
+        console.log(props)
         setBalance(web3Context.balances[props.basket.name])
         getBasketInfo()
     }, [web3Context.balances])

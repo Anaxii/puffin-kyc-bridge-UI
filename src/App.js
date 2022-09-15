@@ -9,9 +9,9 @@ import {Web3Context} from "./helpers/context"
 import {ExposureInfo} from "./helpers/ExposureInfo";
 import LoadingModal from "./components/LoadingModal";
 import {ToastContainer} from 'react-toastify';
-import {Tokens} from "./constants/tokens";
+import {tokens_layout} from "./constants/tokens";
 import {sleep} from "./helpers/util";
-import {getBaskets} from "./helpers/api";
+import {getBaskets, getTokens} from "./helpers/api";
 import {baskets_layout} from "./constants/baskets";
 
 function App() {
@@ -25,17 +25,26 @@ function App() {
   const [currentChainID, setCurrentChainID] = useState(1)
   const [loadingMessage, setLoadingMessage] = useState("Loading account")
   const [showLoadingModal, setShowLoadingModal] = useState(false)
-  const [baskets, setBaskets] = useState({})
+  const [baskets, setBaskets] = useState([])
+  const [tokens, setTokens] = useState([])
 
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const refreshData = async () => {
     let _baskets = await getBaskets()
-    setBaskets(_baskets || baskets_layout)
+    _baskets = _baskets.length > 0 ? _baskets : baskets_layout
+    setBaskets(_baskets)
 
-    if (_baskets) {
+    let _tokens = await getTokens()
+    _tokens = _tokens.length > 0 ? _tokens : tokens_layout
+    setTokens(_tokens)
+
+    console.log("test", _baskets, _tokens)
+
+    if (_baskets)
       localStorage.setItem("baskets", JSON.stringify(_baskets))
-    }
+    if (_tokens)
+      localStorage.setItem("tokens", JSON.stringify(_tokens))
 
     let _account = account
     while (!_account) {
@@ -52,8 +61,8 @@ function App() {
 
     let _balances = {}
 
-    for (const i in Tokens) {
-      _balances[Tokens[i].token] = await _exposureInfo.getBalanceOfAddress(Tokens[i].tokenAddress, _account)
+    for (const i in _tokens) {
+      _balances[tokens_layout[i].token] = await _exposureInfo.getBalanceOfAddress(_tokens[i].tokenAddress, _account)
     }
 
     setExposureInfo(_exposureInfo)
@@ -62,7 +71,14 @@ function App() {
 
   useEffect(() => {
     if (provider) {
-      setBaskets(JSON.parse(localStorage.getItem("baskets")))
+      let _basket = JSON.parse(localStorage.getItem("baskets"))
+      if (_basket.length > 0)
+        setBaskets(_basket)
+
+      let _tokens = JSON.parse(localStorage.getItem("tokens"))
+      if (_tokens.length > 0)
+        setTokens(_tokens)
+
       setWeb3Data()
       provider.on("accountsChanged", (accounts) => {
         if (accounts.length == 0) {
@@ -88,7 +104,7 @@ function App() {
   }, [provider])
 
   useEffect(() => {
-    if (provider && account && web3 && balances && !ready) {
+    if (provider && account && web3 && balances && baskets.length > 0 && tokens.length > 0 && !ready) {
       setConnecting(false)
       setReady(true)
       setRefreshTimer(setInterval(refreshData, 10000))
