@@ -136,7 +136,7 @@ export default function CollapsibleBasketData(props: any) {
                                 Holders:
                             </p>
                             <p style={{textAlign: "right"}}>
-                                ${formatNumber(props.basket.marketPrice)}
+                                {formatNumber(props.basket.marketPrice)}
                             </p>
                             <p style={{textAlign: "left"}}>
                                 Liquidity:

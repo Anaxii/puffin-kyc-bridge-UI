@@ -30,9 +30,12 @@ function App() {
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const refreshData = async () => {
-
     let _baskets = await getBaskets()
     setBaskets(_baskets || baskets_layout)
+
+    if (_baskets) {
+      localStorage.setItem("baskets", JSON.stringify(_baskets))
+    }
 
     let _account = account
     while (!_account) {
@@ -59,6 +62,7 @@ function App() {
 
   useEffect(() => {
     if (provider) {
+      setBaskets(JSON.parse(localStorage.getItem("baskets")))
       setWeb3Data()
       provider.on("accountsChanged", (accounts) => {
         if (accounts.length == 0) {
