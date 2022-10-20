@@ -58,11 +58,14 @@ export default function BridgeToMainnet(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
+                let f = true
                 await contract.methods.approve("0xA65951646e399292ef195090ebb2D56eb346d978", BigInt(Math.floor(sharesToCreate * (10**10))) * BigInt(10**8)).send({from: web3Context.account}).catch((err: any) => {
                     reject()
+                    f = false
                     return
                 })
-                setToApprove(false)
+                if (f)
+                    setToApprove(false)
                 await getAllowance(selectedToken)
 
             } catch {

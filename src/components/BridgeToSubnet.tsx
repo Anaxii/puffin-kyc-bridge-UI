@@ -17,7 +17,6 @@ export default function BridgeToSubnet(props: any) {
     const [selectedToken, setToken] = useState([]);
 
     const handleSubmit = async (event: any) => {
-        console.log(selectedToken, toApprove, allowance, sharesToCreate)
         if (toApprove) {
             await approve()
             return
@@ -26,12 +25,10 @@ export default function BridgeToSubnet(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
-                console.log(sharesToCreate)
                 await contract.methods.bridgeToSubnet(BigInt(Math.floor(sharesToCreate * (10**10))) * BigInt(10**8), selectedToken).send({from: web3Context.account}).catch((err: any) => {
                     reject()
                     return
                 })
-                setToApprove(false)
                 await getAllowance(selectedToken)
 
             } catch {
@@ -58,11 +55,14 @@ export default function BridgeToSubnet(props: any) {
 
         let _approveToast = new Promise(async (ok: any, reject: any) => {
             try {
+                let f = true
                 await contract.methods.approve("0x555A7C8F6B5f0c2Aaa6c94dbC6199C8EA82182a9", BigInt(Math.floor(sharesToCreate * (10**10))) * BigInt(10**8)).send({from: web3Context.account}).catch((err: any) => {
                     reject()
+                    f = false
                     return
                 })
-                setToApprove(false)
+                if (f)
+                    setToApprove(false)
                 await getAllowance(selectedToken)
 
             } catch {
@@ -106,8 +106,7 @@ export default function BridgeToSubnet(props: any) {
             value = Math.round(maxShares * 100000) / 100000
 
         let _allowance = await getAllowance(selectedToken)
-        console.log(_allowance)
-        if (BigInt(Math.floor(sharesToCreate * (10**10))) * BigInt(10**8) > BigInt(allowance)) {
+        if (BigInt(Math.floor(sharesToCreate * (10**10))) * BigInt(10**8) > BigInt(_allowance)) {
             setToApprove(true)
         } else {
             setToApprove(false)
