@@ -11,7 +11,7 @@ export default function Navigation(props: any) {
 
             </div>
             <h2 className={"exposure-title"}>
-                Exposure v1
+                Exposure PoC
             </h2>
         </div>
 

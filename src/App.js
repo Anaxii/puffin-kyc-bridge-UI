@@ -4,6 +4,7 @@ import ConnectWeb3 from "./components/ConnectWeb3.tsx";
 import Web3 from "web3";
 import Navigation from "./components/Navigation";
 import DApp from "./components/DApp";
+import 'react-toastify/dist/ReactToastify.css';
 
 import {Web3Context} from "./helpers/context"
 import {ExposureInfo} from "./helpers/ExposureInfo";
@@ -11,8 +12,6 @@ import LoadingModal from "./components/LoadingModal";
 import {ToastContainer} from 'react-toastify';
 import {tokens_layout} from "./constants/tokens";
 import {sleep} from "./helpers/util";
-import {getBaskets, getTokens} from "./helpers/api";
-import {baskets_layout} from "./constants/baskets";
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -31,16 +30,15 @@ function App() {
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const refreshData = async () => {
-    let _baskets = await getBaskets()
-    _baskets = _baskets.length > 0 ? _baskets : baskets_layout
-    setBaskets(_baskets)
+    // let _baskets = await getBaskets()
+    // _baskets = _baskets ? _baskets : baskets_layout
+    // setBaskets(_baskets)
 
-    let _tokens = await getTokens()
-    _tokens = _tokens.length > 0 ? _tokens : tokens_layout
+    let _tokens = tokens_layout
     setTokens(_tokens)
 
-    if (_baskets)
-      localStorage.setItem("baskets", JSON.stringify(_baskets))
+    // if (_baskets)
+    //   localStorage.setItem("baskets", JSON.stringify(_baskets))
     if (_tokens)
       localStorage.setItem("tokens", JSON.stringify(_tokens))
 
@@ -70,11 +68,11 @@ function App() {
   useEffect(() => {
     if (provider) {
       let _basket = JSON.parse(localStorage.getItem("baskets"))
-      if (_basket.length > 0)
+      if (_basket)
         setBaskets(_basket)
 
       let _tokens = JSON.parse(localStorage.getItem("tokens"))
-      if (_tokens.length > 0)
+      if (_tokens)
         setTokens(_tokens)
 
       setWeb3Data()
@@ -102,7 +100,7 @@ function App() {
   }, [provider])
 
   useEffect(() => {
-    if (provider && account && web3 && balances && baskets.length > 0 && tokens.length > 0 && !ready) {
+    if (provider && account && web3 && balances && tokens.length > 0 && !ready) {
       setConnecting(false)
       setReady(true)
       setRefreshTimer(setInterval(refreshData, 10000))
@@ -112,8 +110,12 @@ function App() {
   const setWeb3Data = async () => {
     let _web3 = await new Web3(provider);
     let chainID = await _web3.eth.getChainId()
+    if (window.ethereum != undefined) {
+      chainID =  Number(window.ethereum.chainId)
+    }
+    setCurrentChainID(chainID)
     if (chainID != 43114 && chainID != 43113) {
-      setLoadingMessage("Change your network to Avalanche to continue")
+      setLoadingMessage("Change your network to Avalanche Fuji to continue")
       return
     }
     setLoadingMessage("Loading account")
@@ -125,6 +127,7 @@ function App() {
 
 
     await refreshData()
+    console.log("test")
 
     setShowLoadingModal(false)
   }
@@ -148,7 +151,7 @@ function App() {
         {!ready ?
           <header className="App-header">
             <h3>
-              Exposure Market Baskets
+              Exposure PFN Proof of Concept
             </h3>
             <ConnectWeb3 setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting} connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID}/>
           </header>
@@ -167,7 +170,7 @@ function App() {
                 pauseOnHover
               />
               <Navigation account={account} disconnect={disconnect} />
-              <DApp account={account} provider={provider} web3={web3} baskets={baskets}/>
+              <DApp account={account} provider={provider} web3={web3} baskets={baskets} tokens={tokens} balances={balances}/>
               {showLoadingModal && <LoadingModal/>}
             </Web3Context.Provider>
           </div>

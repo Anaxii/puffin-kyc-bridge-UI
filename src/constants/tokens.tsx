@@ -1,21 +1,5 @@
 export let tokens_layout = [
     {
-        "name": "XPSR Alpha 10/WAVAX",
-        "token": "XPSR Alpha 100",
-        "quote": "WAVAX",
-        "pairAddress": "",
-        "tokenAddress": "0x98d3CBEb3D6bC861e04c7d6238eD8107cE7F1703",
-        "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
-    },
-    {
-        "name": "XPSR Alpha 10/WAVAX",
-        "token": "XPSR Alpha 10",
-        "quote": "WAVAX",
-        "pairAddress": "",
-        "tokenAddress": "0x98d3CBEb3D6bC861e04c7d6238eD8107cE7F1703",
-        "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
-    },
-    {
         "name": "Token A/WAVAX",
         "token": "Token A",
         "quote": "WAVAX",
@@ -56,43 +40,43 @@ export let tokens_layout = [
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     },
     {
-        "name": "Token F/WAVAX",
-        "token": "Token F",
+        "name": "Subnet Token A/WAVAX",
+        "token": "Subnet Token A",
         "quote": "WAVAX",
-        "pairAddress": "0x4217eacc1bd512B62eD8f2D49C0686a91DfE7706",
-        "tokenAddress": "0x6D27b9c9d52dcd9D33E258463CAfA0B84EBA3FcD",
+        "pairAddress": "0x2202497d8A65fc65540c3Bf189d6f8dA9756739B",
+        "tokenAddress": "0x3acAF7DE524F1033de2Ac9694093154Fdc178631",
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     },
     {
-        "name": "Token G/WAVAX",
-        "token": "Token G",
+        "name": "Subnet Token B/WAVAX",
+        "token": "Subnet Token B",
         "quote": "WAVAX",
-        "pairAddress": "0xf96c875D888E76FBf2df62563946c1D0E66B350e",
-        "tokenAddress": "0xB2bF61390A770c5883C6674E84Df8B789441156D",
+        "pairAddress": "0x5F7Cf736DA5Ad0Dfe04516c8d32c9a348034Ad30",
+        "tokenAddress": "0x0ECFF406331e22d2B1fe003adBe797Ce2A1bC747",
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     },
     {
-        "name": "Token H/WAVAX",
-        "token": "Token H",
+        "name": "Subnet Token C/WAVAX",
+        "token": "Subnet Token C",
         "quote": "WAVAX",
-        "pairAddress": "0x042A7541f1cb77e571873fA38ce90d8F327198f7",
-        "tokenAddress": "0x1D75Fe89157568e852Ad9bff6b4246e6Ce22EFC7",
+        "pairAddress": "0xd32953c04A106a0753b29D371C1e7074C3cF8068",
+        "tokenAddress": "0x5cD8799AA3b46DA41f9280C7DE2Dc05c5e704f33",
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     },
     {
-        "name": "Token I/WAVAX",
-        "token": "Token I",
+        "name": "Subnet Token D/WAVAX",
+        "token": "Subnet Token D",
         "quote": "WAVAX",
-        "pairAddress": "0x44fdBC4455d97355a957D68A6eB2471B66987B65",
-        "tokenAddress": "0x114419D1d4A6004aA6888Fc981Be77288447ef01",
+        "pairAddress": "0x2e6431DA1DfeF4B09E9511fb737756c1A7F3ae68",
+        "tokenAddress": "0x6A7BbEd70284D48651D073c95b9Aa1C3e34b84c1",
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     },
     {
-        "name": "Token J/WAVAX",
-        "token": "Token J",
+        "name": "Subnet Token E/WAVAX",
+        "token": "Subnet Token E",
         "quote": "WAVAX",
-        "pairAddress": "0xb6911DF489DFDcD0633b2FC5E1efa61bac41BBBd",
-        "tokenAddress": "0xb119AbFA9dfA20ae4960F0BFe8E82149C1C9D669",
+        "pairAddress": "0x6cBB586CdDc9799b0101Cbc5d35C5b2412aaDDA6",
+        "tokenAddress": "0xCB5c20Eb8f1b1Bf65A9bc5b2ce5b257BB405E73a",
         "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
     }
 ]
