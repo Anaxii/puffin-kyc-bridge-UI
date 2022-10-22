@@ -57,7 +57,7 @@ export default function OraclePrices(props: any) {
         <div>
             {props.tokens.map((token: any, index: any) => {
                 return <div className={"token-list"} style={{width: "50%"}}>
-                    <p >{token.token}</p>
+                    {!token.name.includes("Subnet") ? <p>{token.name}</p> : <p>{token.token +"/USD"}</p>}
                     <p>
                         {prices[token.token]}
                     </p>
