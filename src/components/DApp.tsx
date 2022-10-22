@@ -1,6 +1,7 @@
 import CollapsibleBasketData from "./CollapsibleBasketData";
 import {formatNumber} from "../helpers/util";
-import BasketModal from "./BasketModal";
+import BridgeModal from "./BridgeModal";
+import OraclePrices from "./OraclePrices";
 
 export default function DApp(props: any) {
 
@@ -26,47 +27,60 @@ export default function DApp(props: any) {
                 Bridge to Subnet
             </h3>
             <div>
-                <BasketModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>
+                <BridgeModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>
 
             </div>
             <h3>
                 Bridge to Mainnet
             </h3>
             <div>
-                <BasketModal title={"To Mainnet"} tokens={props.tokens} balances={props.balances}/>
+                <BridgeModal title={"To Mainnet"} tokens={props.tokens} balances={props.balances}/>
 
             </div>
         </div>
-        {/*<h2>*/}
-        {/*    Available Baskets*/}
-        {/*</h2>*/}
-        {/*<div className={"basket-list-header"}>*/}
-        {/*    <p style={{textAlign: "left"}}>*/}
-        {/*        Name*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        Balance*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        Value*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        NAV*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        Supply*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        Market Price*/}
-        {/*    </p>*/}
-        {/*    <p>*/}
-        {/*        Index Price*/}
-        {/*    </p>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*    {props.baskets.map((basket: any, index: any) => {*/}
-        {/*        return <CollapsibleBasketData basket={basket} key={basket.name}/>*/}
-        {/*    })}*/}
-        {/*</div>*/}
+        <h2>
+            Oracle
+        </h2>
+        <div>
+            <h3>
+                Mainnet Oracle
+            </h3>
+            <OraclePrices tokens={props.tokens}/>
+            <h3>
+                Subnet Oracle
+            </h3>
+
+        </div>
+        <h2>
+            Available Baskets
+        </h2>
+        <div className={"basket-list-header"}>
+            <p style={{textAlign: "left"}}>
+                Name
+            </p>
+            <p>
+                Balance
+            </p>
+            <p>
+                Value
+            </p>
+            <p>
+                NAV
+            </p>
+            <p>
+                Supply
+            </p>
+            <p>
+                Market Price
+            </p>
+            <p>
+                Index Price
+            </p>
+        </div>
+        <div>
+            {props.baskets.map((basket: any, index: any) => {
+                return <CollapsibleBasketData basket={basket} key={basket.name}/>
+            })}
+        </div>
     </div>
 }

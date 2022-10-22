@@ -11,6 +11,7 @@ import {ExposureInfo} from "./helpers/ExposureInfo";
 import LoadingModal from "./components/LoadingModal";
 import {ToastContainer} from 'react-toastify';
 import {tokens_layout} from "./constants/tokens";
+import {baskets_layout} from "./constants/baskets";
 import {sleep} from "./helpers/util";
 
 function App() {
@@ -30,9 +31,8 @@ function App() {
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const refreshData = async () => {
-    // let _baskets = await getBaskets()
-    // _baskets = _baskets ? _baskets : baskets_layout
-    // setBaskets(_baskets)
+    let _baskets = baskets_layout
+    setBaskets(_baskets)
 
     let _tokens = tokens_layout
     setTokens(_tokens)

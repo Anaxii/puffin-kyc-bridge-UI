@@ -1,9 +1,8 @@
 // @ts-ignore
 import Modal from 'react-modal';
 import {useState} from "react";
-import RedeemShares from "./RedeemShares";
-import CreateShares from "./CreateShares";
-
+import BridgeToSubnet from "./BridgeToSubnet";
+import BridgeToMainnet from "./BridgeToMainnet";
 const customStyles = {
     overlay: {
         backgroundColor: "rgba(0,0,0,0.5)"
@@ -27,10 +26,10 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root');
 
-export default function BasketModal(props: any) {
+export default function BridgeModal(props: any) {
     let subtitle: HTMLHeadingElement | null;
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("Create Shares");
+    const [selectedOption, setSelectedOption] = useState("To Subnet");
 
     function openModal() {
         setSelectedOption(props.title)
@@ -56,31 +55,31 @@ export default function BasketModal(props: any) {
             >
                 <div className={"modal-options"}>
                     <div onClick={() => {
-                        changeOption("Create Shares")
+                        changeOption("To Subnet")
                     }}
                          style={{
-                             backgroundColor: selectedOption !== "Redeem Shares" ? '#282C34' : '',
-                             borderTop: selectedOption !== "Redeem Shares" ? '2px solid white' : ''
+                             backgroundColor: selectedOption !== "To Mainnet" ? '#282C34' : '',
+                             borderTop: selectedOption !== "To Mainnet" ? '2px solid white' : ''
                          }} className={"modal-options-title"}>
-                        Create Shares
+                        Bridge To Subnet
                     </div>
                     <div onClick={() => {
-                        changeOption("Redeem Shares")
+                        changeOption("To Mainnet")
                     }}
                          style={{
-                             backgroundColor: selectedOption !== "Create Shares" ? '#282C34' : '',
-                             borderTop: selectedOption !== "Create Shares" ? '2px solid white' : ''
+                             backgroundColor: selectedOption !== "To Subnet" ? '#282C34' : '',
+                             borderTop: selectedOption !== "To Subnet" ? '2px solid white' : ''
                          }}
                          className={"modal-options-title"}>
-                        Redeem Shares
+                        Bridge To Mainnet
                     </div>
                 </div>
                 {
-                    selectedOption === "Redeem Shares"
+                    selectedOption === "To Subnet"
                         ?
-                        <RedeemShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} weights={props.weight}/>
+                        <BridgeToSubnet tokens={props.tokens} balances={props.balances}/>
                         :
-                        <CreateShares basket={props.basket} closeModal={closeModal} balance={props.balance} portions={props.portions} prices={props.prices} weights={props.weight}/>
+                        <BridgeToMainnet tokens={props.tokens} balances={props.balances}/>
                 }
             </Modal>
         </div>
