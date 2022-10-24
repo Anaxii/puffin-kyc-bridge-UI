@@ -1,5 +1,21 @@
 export let tokens_layout = [
     {
+        "name": "USDC/WAVAX",
+        "token": "USDC",
+        "quote": "WAVAX",
+        "pairAddress": "0x23Cb1c2582C23C7E45415E290580E7C7e5af7C0D",
+        "tokenAddress": "0x803871f6BB32a9C1230cdc182002f8e058791A9A",
+        "quoteAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883"
+    },
+    {
+        "name": "WAVAX/USDC",
+        "token": "WAVAX",
+        "quote": "USDC",
+        "pairAddress": "0x23Cb1c2582C23C7E45415E290580E7C7e5af7C0D",
+        "tokenAddress": "0x72187342BC71CAd08FcCC361ff8336A684dd6883",
+        "quoteAddress": "0x803871f6BB32a9C1230cdc182002f8e058791A9A"
+    },
+    {
         "name": "Token A/WAVAX",
         "token": "Token A",
         "quote": "WAVAX",

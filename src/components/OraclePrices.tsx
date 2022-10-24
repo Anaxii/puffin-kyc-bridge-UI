@@ -56,6 +56,8 @@ export default function OraclePrices(props: any) {
     return (
         <div>
             {props.tokens.map((token: any, index: any) => {
+                if (token.name == "WAVAX/USDC")
+                    return
                 return <div className={"token-list"} style={{width: "50%"}}>
                     {!token.name.includes("Subnet") ? <p>{token.name}</p> : <p>{token.token +"/USD"}</p>}
                     <p>
