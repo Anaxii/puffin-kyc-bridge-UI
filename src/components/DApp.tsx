@@ -94,10 +94,11 @@ export default function DApp(props: any) {
                         <h2>
                             Fuji AVAX Facuet
                         </h2>
-                        {/*Facuet*/}
-                        <div>
-                            <button className={"primary-btn"}>Open Faucet</button>
-                        </div>
+                        <a href={"https://faucet.avax.network/"} target={"_blank"}>
+                            <div>
+                                <button className={"primary-btn"}>Open Faucet</button>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
