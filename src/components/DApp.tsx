@@ -6,6 +6,9 @@ import Verify from "./Verify";
 import {useContext, useEffect, useState} from "react";
 import {Web3Context} from "../helpers/context";
 import ExposureMainnetBridgeABI from "../constants/abi/MainnetBridge.json"
+import FaucetABI from "../constants/abi/Faucet.json"
+
+import {toast} from "react-toastify";
 
 export default function DApp(props: any) {
     const web3Context: any = useContext(Web3Context);
@@ -19,6 +22,32 @@ export default function DApp(props: any) {
         setIsAllowed(val)
         if (val && timer)
             clearInterval(timer)
+    }
+
+    const getTokens = async (event: any) => {
+        let contract = new web3Context.web3.eth.Contract(FaucetABI, "0x697b0d148Aa65501A45D679Ecf29480526965d17")
+
+        let _approveToast = new Promise(async (ok: any, reject: any) => {
+            try {
+                await contract.methods.withdraw().send({from: web3Context.account}).catch((err: any) => {
+                    reject()
+                    return
+                })
+            } catch {
+                reject()
+            }
+            ok()
+        })
+        await toast.promise(
+            _approveToast,
+            {
+                pending: 'Awaiting transaction confirmation',
+                success: 'Transaction confirmed',
+                error: 'Transaction rejected'
+            }
+        ).then(async () => {
+            await web3Context.refreshData()
+        })
     }
 
     useEffect(() => {
@@ -87,7 +116,7 @@ export default function DApp(props: any) {
                             Test Tokens Faucet
                         </h2>
                         <div>
-                            <button className={"primary-btn"}>Get Tokens</button>
+                            <button className={"primary-btn"} onClick={getTokens}>Get Tokens</button>
                         </div>
                     </div>
                     <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
