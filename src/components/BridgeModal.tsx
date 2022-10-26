@@ -46,7 +46,7 @@ export default function BridgeModal(props: any) {
 
     return (
         <div>
-            <button className={"primary-btn"} onClick={openModal}>{props.title}</button>
+            <button className={"primary-btn"} onClick={openModal}>Bridge</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -61,7 +61,7 @@ export default function BridgeModal(props: any) {
                              backgroundColor: selectedOption !== "To Mainnet" ? '#282C34' : '',
                              borderTop: selectedOption !== "To Mainnet" ? '2px solid white' : ''
                          }} className={"modal-options-title"}>
-                        Bridge To Subnet
+                        To Subnet
                     </div>
                     <div onClick={() => {
                         changeOption("To Mainnet")
@@ -71,7 +71,7 @@ export default function BridgeModal(props: any) {
                              borderTop: selectedOption !== "To Subnet" ? '2px solid white' : ''
                          }}
                          className={"modal-options-title"}>
-                        Bridge To Mainnet
+                        To Mainnet
                     </div>
                 </div>
                 {

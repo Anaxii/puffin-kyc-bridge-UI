@@ -34,45 +34,73 @@ export default function DApp(props: any) {
             </div>
             :
             <div>
-
-                <h2>
-                    Balances
-                </h2>
-                <div>
-                    {props.tokens.map((token: any, index: any) => {
-                        return <div className={"token-list"} style={{width: "50%"}}>
-                            <p>{token.token}</p>
-                            <p>
-                                {formatNumber(props.balances[token.token])}
-                            </p>
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    width: "80%",
+                    marginLeft: "auto",
+                    marginRight: "auto"
+                }}>
+                    <div>
+                        <h2>
+                            Balances
+                        </h2>
+                        <div>
+                            {props.tokens.map((token: any, index: any) => {
+                                return <div className={"token-list"} style={{width: "100%"}}>
+                                    <p>{token.token}</p>
+                                    <p>
+                                        {formatNumber(props.balances[token.token])}
+                                    </p>
+                                </div>
+                            })}
                         </div>
-                    })}
-                </div>
-                <h2>
-                    Bridge
-                </h2>
-                <div>
-                    <h3>
-                        Bridge to Subnet
-                    </h3>
-                    <div>
-                        <BridgeModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>
-
                     </div>
-                    <h3>
-                        Bridge to Mainnet
-                    </h3>
                     <div>
-                        <BridgeModal title={"To Mainnet"} tokens={props.tokens} balances={props.balances}/>
-
+                        <h2>
+                            Oracle
+                        </h2>
+                        <div>
+                            <OraclePrices tokens={props.tokens}/>
+                        </div>
                     </div>
                 </div>
-                <h2>
-                    Oracle
-                </h2>
-                <div>
-                    <OraclePrices tokens={props.tokens}/>
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    width: "80%",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    textAlign: "center",
+                    paddingTop: "1.5rem"
+                }}>
+                    <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
+                        <h2>
+                            Bridge Tokens
+                        </h2>
+                        <div>
+                            <BridgeModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>
+                        </div>
+                    </div>
+                    <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
+                        <h2>
+                            Test Tokens Faucet
+                        </h2>
+                        <div>
+                            <button className={"primary-btn"}>Get Tokens</button>
+                        </div>
+                    </div>
+                    <div style={{width: "100%", marginLeft: "auto", marginRight: "auto"}}>
+                        <h2>
+                            Fuji AVAX Facuet
+                        </h2>
+                        <div>
+                            <button className={"primary-btn"}>Open Faucet</button>
+                        </div>
+                    </div>
                 </div>
+
+
                 {/*<h2>*/}
                 {/*    Available Baskets*/}
                 {/*</h2>*/}
