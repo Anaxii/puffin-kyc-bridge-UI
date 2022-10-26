@@ -94,6 +94,7 @@ export default function DApp(props: any) {
                         <h2>
                             Fuji AVAX Facuet
                         </h2>
+                        {/*Facuet*/}
                         <div>
                             <button className={"primary-btn"}>Open Faucet</button>
                         </div>
