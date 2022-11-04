@@ -28,51 +28,54 @@ export default function DApp(props: any) {
     }, [web3Context])
 
     return <div className={"dapp"}>
-        {!isAllowed ?
+        {isAllowed ?
             <div>
                 <Verify/>
             </div>
             :
             <div>
-
-                <h2>
-                    Balances
+                <h2 style={{textAlign: "center", paddingTop: "5rem"}}>
+                    Your account has been verified
                 </h2>
-                <div>
-                    {props.tokens.map((token: any, index: any) => {
-                        return <div className={"token-list"} style={{width: "50%"}}>
-                            <p>{token.token}</p>
-                            <p>
-                                {formatNumber(props.balances[token.token])}
-                            </p>
-                        </div>
-                    })}
-                </div>
-                <h2>
-                    Bridge
-                </h2>
-                <div>
-                    <h3>
-                        Bridge to Subnet
-                    </h3>
-                    <div>
-                        <BridgeModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>
 
-                    </div>
-                    <h3>
-                        Bridge to Mainnet
-                    </h3>
-                    <div>
-                        <BridgeModal title={"To Mainnet"} tokens={props.tokens} balances={props.balances}/>
+                {/*<h2>*/}
+                {/*    Balances*/}
+                {/*</h2>*/}
+                {/*<div>*/}
+                {/*    {props.tokens.map((token: any, index: any) => {*/}
+                {/*        return <div className={"token-list"} style={{width: "50%"}}>*/}
+                {/*            <p>{token.token}</p>*/}
+                {/*            <p>*/}
+                {/*                {formatNumber(props.balances[token.token])}*/}
+                {/*            </p>*/}
+                {/*        </div>*/}
+                {/*    })}*/}
+                {/*</div>*/}
+                {/*<h2>*/}
+                {/*    Bridge*/}
+                {/*</h2>*/}
+                {/*<div>*/}
+                {/*    <h3>*/}
+                {/*        Bridge to Subnet*/}
+                {/*    </h3>*/}
+                {/*    <div>*/}
+                {/*        <BridgeModal title={"To Subnet"} tokens={props.tokens} balances={props.balances}/>*/}
 
-                    </div>
-                </div>
-                <h2>
-                    Oracle
-                </h2>
-                <div>
-                    <OraclePrices tokens={props.tokens}/>
-                </div>
+                {/*    </div>*/}
+                {/*    <h3>*/}
+                {/*        Bridge to Mainnet*/}
+                {/*    </h3>*/}
+                {/*    <div>*/}
+                {/*        <BridgeModal title={"To Mainnet"} tokens={props.tokens} balances={props.balances}/>*/}
+
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/*<h2>*/}
+                {/*    Oracle*/}
+                {/*</h2>*/}
+                {/*<div>*/}
+                {/*    <OraclePrices tokens={props.tokens}/>*/}
+                {/*</div>*/}
                 {/*<h2>*/}
                 {/*    Available Baskets*/}
                 {/*</h2>*/}

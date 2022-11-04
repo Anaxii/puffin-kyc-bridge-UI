@@ -43,7 +43,18 @@ export default function Verify(props: any) {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({hashedMessage, account: accounts[0], message, r, s, v})
+            body: JSON.stringify(
+                {
+                    wallet_address: accounts[0],
+                    email,
+                    signature: {
+                        signature_data: {
+                            hashed_message: hashedMessage, r: r.toString(), s: s.toString(), v: v.toString()
+                        },
+                        message,
+                        account: accounts[0]
+                    },
+                })
         };
         fetch('http://localhost:8080/verify', requestOptions)
             .then(response => response.json())
